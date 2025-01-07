@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Event Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav id="navbar">
+        <h1>Event Management</h1>
+        <div id="nav-links">
+            <a href="index.html">Events</a>
+            <a href="#" class="active" id="create-event-link">Create Event</a>
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Create New Event</h2>
+
+        <form id="create-event-form" class="form-container">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required placeholder="Enter event title">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required placeholder="Enter event description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" name="time" required> <!-- Added time input -->
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required placeholder="Enter event location">
+            </div>
+
+            <button type="submit">Create Event</button>
+            <p id='error-message' style="color: red;"></p> <!-- For displaying errors -->
+        </form>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 Event Management By Arnel Gonzaga. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src='https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.js'></script> <!-- Include jwt-decode -->
+    <script src='js/auth.js'></script>
+    <script src='js/create-event.js'></script> <!-- Ensure this script is included -->
+</body>
+</html>

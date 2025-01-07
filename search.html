@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Recipes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .recipe {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Search Recipes</h2>
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="ingredient">Search by Ingredient:</label>
+            <input type="text" id="ingredient" name="ingredient">
+        </div>
+        <div class="form-group">
+            <label for="category">Select Category:</label>
+            <select id="category" name="category">
+                <option value="">All Categories</option>
+                <option value="Appetizer">Appetizer</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Snack">Snack</option>
+                <option value="Beverage">Beverage</option>
+            </select>
+        </div>
+        <input type="submit" value="Search">
+    </form>
+    <div class="results" id="results"></div>
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const ingredient = document.getElementById('ingredient').value;
+        const category = document.getElementById('category').value;
+
+        // Construct the search query
+        let query = '/api/recipes/search?';
+        if (ingredient) {
+            query += `ingredient=${encodeURIComponent(ingredient)}&`;
+        }
+        if (category) {
+            query += `category=${encodeURIComponent(category)}&`;
+        }
+        query = query.slice(0, -1); // Remove the trailing '&'
+
+        // Fetch the search results from the backend
+        fetch(query)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear previous results
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '';
+
+                // Display the results
+                if (data.length === 0) {
+                    resultsDiv.innerHTML = '<p>No recipes found.</p>';
+                } else {
+                    data.forEach(recipe => {
+                        const recipeDiv = document.createElement('div');
+                        recipeDiv.classList.add('recipe');
+                        recipeDiv.innerHTML = `
+                            <h3>${recipe.title}</h3>
+                            <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                            <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                            <p><strong>Category:</strong> ${recipe.category}</p>
+                        `;
+                        resultsDiv.appendChild(recipeDiv);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '<p>Error occurred while searching for recipes.</p>';
+            });
+    });
+</script>
+
+</body>
+</html>

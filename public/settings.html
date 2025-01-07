@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+</head>
+<body>
+    <div>
+        <h2>Settings</h2>
+        <p>Change your profile picture, email address, or password.</p>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label for="profile-picture">Profile Picture:</label>
+            <input type="file" id="profile-picture" name="profile-picture">
+            <br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br><br>
+            <input type="submit" value="Update Settings">
+        </form>
+        <p><a href="logout.php">Logout</a></p>
+    </div>
+</body>
+</html>
